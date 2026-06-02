@@ -164,6 +164,26 @@ const DEFAULT_SETTINGS: Settings = {
   soundOn: true,
 };
 
+const PERSIST_STORAGE_KEY = "taskreceipts:v3";
+const LEGACY_PERSIST_STORAGE_KEY = "taskrecipets:v3";
+
+function migrateLegacyPersistStorageKey() {
+  if (typeof window === "undefined") return;
+  try {
+    if (
+      window.localStorage.getItem(PERSIST_STORAGE_KEY) === null &&
+      window.localStorage.getItem(LEGACY_PERSIST_STORAGE_KEY) !== null
+    ) {
+      window.localStorage.setItem(
+        PERSIST_STORAGE_KEY,
+        window.localStorage.getItem(LEGACY_PERSIST_STORAGE_KEY)!,
+      );
+    }
+  } catch {
+    // If browser storage is unavailable, Zustand falls back to a fresh state.
+  }
+}
+
 const MOTTOS = [
   "One pour at a time.",
   "Small loaves, warm kitchen.",
@@ -198,6 +218,8 @@ function dayKey(ts: number): string {
   const day = d.getDate().toString().padStart(2, "0");
   return `${y}-${m}-${day}`;
 }
+
+migrateLegacyPersistStorageKey();
 
 export const useStore = create<StoreState>()(
   persist(
@@ -576,7 +598,7 @@ export const useStore = create<StoreState>()(
       _setHasHydrated: (hasHydrated) => set({ hasHydrated }),
     }),
     {
-      name: "taskrecipets:v3",
+      name: PERSIST_STORAGE_KEY,
       version: 4,
       migrate: (persisted: unknown, version: number) => {
         const state = persisted as { receipts?: Array<{ kind?: string; sourceTaskId?: string; id: string }> };

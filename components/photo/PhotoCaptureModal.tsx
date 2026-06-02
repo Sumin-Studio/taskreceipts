@@ -15,6 +15,15 @@ type CameraPhase = "idle" | "loading" | "ready" | "error";
 
 const DRAW_BG = "#B8B8B8";
 const DRAW_INK = "#2A2A2A";
+const SIGN_OFF_IMAGE_TYPE = "image/webp";
+const SIGN_OFF_IMAGE_QUALITY = 0.82;
+
+function encodeSignOffImage(canvas: HTMLCanvasElement): string {
+  const dataUrl = canvas.toDataURL(SIGN_OFF_IMAGE_TYPE, SIGN_OFF_IMAGE_QUALITY);
+  return dataUrl.startsWith(`data:${SIGN_OFF_IMAGE_TYPE}`)
+    ? dataUrl
+    : canvas.toDataURL("image/png");
+}
 
 export function PhotoCaptureModal() {
   const pendingPhotoFor = useStore((s) => s.pendingPhotoFor);
@@ -233,8 +242,8 @@ function SignOffDialog({
     }
     const v = videoRef.current;
     if (!v || v.videoWidth === 0) return;
-    const dataUrl = halftone(v, MOOD_PHOTO_RENDER_W, MOOD_PHOTO_RENDER_H).toDataURL(
-      "image/png",
+    const dataUrl = encodeSignOffImage(
+      halftone(v, MOOD_PHOTO_RENDER_W, MOOD_PHOTO_RENDER_H),
     );
     setCapturedUrl(dataUrl);
     stopCamera();
@@ -249,7 +258,9 @@ function SignOffDialog({
       const v = videoRef.current;
       if (v && v.videoWidth > 0) {
         commit(
-          halftone(v, MOOD_PHOTO_RENDER_W, MOOD_PHOTO_RENDER_H).toDataURL("image/png"),
+          encodeSignOffImage(
+            halftone(v, MOOD_PHOTO_RENDER_W, MOOD_PHOTO_RENDER_H),
+          ),
         );
         return;
       }
@@ -260,8 +271,10 @@ function SignOffDialog({
     const canvas = canvasRef.current;
     if (canvas && hasDrawn.current) {
       commit(
-        halftone(canvas, MOOD_PHOTO_RENDER_W, MOOD_PHOTO_RENDER_H, { inkOnly: true }).toDataURL(
-          "image/png",
+        encodeSignOffImage(
+          halftone(canvas, MOOD_PHOTO_RENDER_W, MOOD_PHOTO_RENDER_H, {
+            inkOnly: true,
+          }),
         ),
       );
       return;

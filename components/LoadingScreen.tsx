@@ -56,7 +56,7 @@ export function LoadingScreen({
     >
       <div className="flex flex-col items-center select-none">
         <div className="text-[11px] tracking-[0.32em] uppercase text-[color:var(--color-ink)]/70 mb-6">
-          Task Recipets
+          Task Receipts
         </div>
 
         {/* Printer slot */}
@@ -71,7 +71,7 @@ export function LoadingScreen({
         >
           <div className="w-[260px] bg-[color:var(--color-receipt)] font-mono text-[color:var(--color-receipt-ink)] px-5 pt-4 pb-5">
             <div className="text-center text-[13px] font-semibold tracking-wider">
-              TASK RECIPETS
+              TASK RECEIPTS
             </div>
             <div className="mt-1 text-center text-[9px] tracking-wider opacity-70">
               WARMING UP THE PRESS

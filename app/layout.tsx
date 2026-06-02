@@ -9,7 +9,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Task Recipets",
+  title: "Task Receipts",
   description: "A Pomodoro timer that prints a receipt every time you finish a task.",
 };
 
