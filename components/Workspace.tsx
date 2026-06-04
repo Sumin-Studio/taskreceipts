@@ -52,20 +52,34 @@ export function Workspace() {
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(() =>
-    typeof window === "undefined"
-      ? false
-      : window.matchMedia("(max-width: 767px)").matches,
+    typeof window === "undefined" ? false : getIsMobileViewport(),
   );
 
   useEffect(() => {
     const query = window.matchMedia("(max-width: 767px)");
-    const update = () => setIsMobile(query.matches);
+    const update = () => setIsMobile(getIsMobileViewport());
     update();
     query.addEventListener("change", update);
-    return () => query.removeEventListener("change", update);
+    window.addEventListener("resize", update);
+    window.visualViewport?.addEventListener("resize", update);
+    return () => {
+      query.removeEventListener("change", update);
+      window.removeEventListener("resize", update);
+      window.visualViewport?.removeEventListener("resize", update);
+    };
   }, []);
 
   return isMobile;
+}
+
+function getIsMobileViewport() {
+  const viewportWidth = Math.min(
+    window.innerWidth,
+    window.visualViewport?.width ?? window.innerWidth,
+    document.documentElement.clientWidth || window.innerWidth,
+  );
+  const screenWidth = window.screen?.width ?? viewportWidth;
+  return viewportWidth <= 767 || screenWidth <= 767;
 }
 
 function DesktopWorkspace() {

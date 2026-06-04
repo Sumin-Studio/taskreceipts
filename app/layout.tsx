@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -11,6 +11,11 @@ const plexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   title: "Task Receipts",
   description: "A Pomodoro timer that prints a receipt every time you finish a task.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
