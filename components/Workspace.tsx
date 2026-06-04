@@ -73,13 +73,29 @@ function useIsMobile() {
 }
 
 function getIsMobileViewport() {
+  const phoneUserAgent =
+    /iPhone|iPod|Windows Phone|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent,
+    ) || /Android/i.test(navigator.userAgent);
+  const coarseTouch =
+    navigator.maxTouchPoints > 0 &&
+    window.matchMedia("(hover: none) and (pointer: coarse)").matches;
   const viewportWidth = Math.min(
     window.innerWidth,
     window.visualViewport?.width ?? window.innerWidth,
     document.documentElement.clientWidth || window.innerWidth,
   );
-  const screenWidth = window.screen?.width ?? viewportWidth;
-  return viewportWidth <= 767 || screenWidth <= 767;
+  const screenShortSide =
+    window.screen != null
+      ? Math.min(window.screen.width, window.screen.height)
+      : viewportWidth;
+
+  return (
+    viewportWidth <= 767 ||
+    screenShortSide <= 767 ||
+    phoneUserAgent ||
+    (coarseTouch && screenShortSide <= 932)
+  );
 }
 
 function DesktopWorkspace() {
