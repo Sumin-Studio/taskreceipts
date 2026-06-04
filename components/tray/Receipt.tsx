@@ -4,7 +4,13 @@ import { AnyReceipt, SessionReceipt, formatDuration } from "@/lib/store";
 import { ReceiptPrintStrip } from "./ReceiptPrintStrip";
 import { ReceiptLogo } from "./ReceiptHeader";
 
-export function Receipt({ receipt }: { receipt: AnyReceipt }) {
+export function Receipt({
+  receipt,
+  responsiveWidth = false,
+}: {
+  receipt: AnyReceipt;
+  responsiveWidth?: boolean;
+}) {
   if (receipt.kind !== "session") {
     return (
       <ReceiptPrintStrip
@@ -17,12 +23,17 @@ export function Receipt({ receipt }: { receipt: AnyReceipt }) {
         photoDataUrl={receipt.photoDataUrl}
         taskTitle={receipt.taskTitle}
         printedAt={receipt.printedAt}
+        responsiveWidth={responsiveWidth}
       />
     );
   }
 
   return (
-    <div className="relative w-full text-[color:var(--color-receipt-ink)] font-mono">
+    <div
+      className={`relative ${
+        responsiveWidth ? "w-full max-w-[380px]" : "w-full"
+      } text-[color:var(--color-receipt-ink)] font-mono`}
+    >
       <div className="receipt-tear-top h-[6px] bg-[color:var(--color-receipt)] -mb-px" />
       <div className="relative bg-[color:var(--color-receipt)] pt-4 px-5 pb-6">
         <SessionBody receipt={receipt} />

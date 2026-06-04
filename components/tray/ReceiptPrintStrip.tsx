@@ -52,6 +52,7 @@ export function ReceiptPrintStrip({
   printedAt,
   onCutComplete,
   className = "",
+  responsiveWidth = false,
 }: {
   taskStartedAt: number;
   timeline: TimelineEntry[];
@@ -67,6 +68,7 @@ export function ReceiptPrintStrip({
   printedAt?: number;
   onCutComplete?: () => void;
   className?: string;
+  responsiveWidth?: boolean;
 }) {
   const squares = squaresProp ?? computeSquares(taskStartedAt, timeline, upToTs);
   const hasPhoto = Boolean(photoDataUrl);
@@ -115,7 +117,9 @@ export function ReceiptPrintStrip({
 
   return (
     <div
-      className={`relative w-[380px] text-[color:var(--color-receipt-ink)] font-mono ${
+      className={`relative ${
+        responsiveWidth ? "w-full max-w-[380px]" : "w-[380px]"
+      } text-[color:var(--color-receipt-ink)] font-mono ${
         paperFeed && !feedDone ? "" : RECEIPT_BG
       } ${className}`}
     >

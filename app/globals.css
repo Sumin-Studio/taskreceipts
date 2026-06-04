@@ -155,8 +155,63 @@ html, body {
 }
 
 @media (max-width: 760px) {
+  .mobile-workspace {
+    --workspace-left-col: 100%;
+    --timer-clock-size: clamp(3rem, 15vw, 4rem);
+    --timer-clock-leading: clamp(3.75rem, 18vw, 5rem);
+    --timer-shell-radius: clamp(1.75rem, 8vw, 2.5rem);
+    --timer-lcd-radius-t: clamp(1.25rem, 6vw, 2rem);
+    --timer-lcd-radius-b: clamp(0.75rem, 4vw, 1rem);
+    --timer-shell-pad: clamp(0.5rem, 2vw, 0.625rem);
+    --timer-btn-h: clamp(2.75rem, 12vw, 3.25rem);
+    background: var(--color-ground);
+    box-sizing: border-box;
+    max-width: 100vw;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mobile-workspace .workspace-panel {
+    width: 100%;
+    max-width: none;
+  }
+
+  .mobile-workspace .timer-widget-shell {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .mobile-workspace .timer-widget-lcd {
+    min-width: 0;
+    padding-inline: clamp(0.75rem, 4vw, 1rem);
+  }
+
+  .mobile-workspace .timer-widget-controls {
+    min-width: 0;
+  }
+
+  .mobile-workspace .timer-widget-btn {
+    min-width: 0;
+  }
+
+  .mobile-workspace .workspace-panel.flex {
+    min-height: 22rem;
+  }
+
+  .mobile-workspace .mobile-receipt-panel {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .mobile-workspace .mobile-receipt-panel > * {
+    width: 100%;
+  }
+
+  .mobile-workspace .task-row {
+    border-radius: 1.125rem;
+  }
+
   .workspace-shell {
-    overflow-x: auto;
     padding-inline: 0.75rem;
   }
 
