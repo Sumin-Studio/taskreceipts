@@ -9,8 +9,18 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://work-recipe.vercel.app"),
   title: "Task Receipts",
   description: "A Pomodoro timer that prints a receipt every time you finish a task.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "Task Receipts",
+    description: "A Pomodoro timer that prints a receipt every time you finish a task.",
+    url: "https://work-recipe.vercel.app/",
+    siteName: "Task Receipts",
+  },
 };
 
 export const viewport: Viewport = {
