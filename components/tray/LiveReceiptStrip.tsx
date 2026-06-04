@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { MS_PER_MIN } from "@/lib/computeSquares";
+import { receiptImageKey } from "@/lib/receiptImageKey";
 import { useStore } from "@/lib/store";
 import { useTimerTick } from "@/lib/useTimerTick";
 import { LiveReceipt3D, type LiveReceipt3DState } from "./LiveReceipt3D";
@@ -84,7 +85,7 @@ export function LiveReceiptStrip({
         cutReceipt.taskId,
         cutReceipt.frozenAt,
         cutReceipt.isCut ? "ready" : "frozen",
-        cutReceipt.photoDataUrl ?? "no-photo",
+        receiptImageKey(cutReceipt.photoDataUrl),
       ].join(":"),
       squares: cutReceipt.squares,
       photoDataUrl: cutReceipt.photoDataUrl,

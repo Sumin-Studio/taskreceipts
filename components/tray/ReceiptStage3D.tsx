@@ -12,6 +12,7 @@ import {
 import { Canvas, useFrame, useThree, type ThreeEvent } from "@react-three/fiber";
 import * as THREE from "three";
 import { computeSquares, MS_PER_MIN } from "@/lib/computeSquares";
+import { receiptImageKey } from "@/lib/receiptImageKey";
 import type { AnyReceipt, CutReceiptSnapshot } from "@/lib/store";
 import { useStore } from "@/lib/store";
 import { PRINTER_TO_STACK_OFFSET } from "@/lib/trayLayout";
@@ -403,7 +404,7 @@ export function ReceiptStage3D({
           cutReceipt.taskId,
           cutReceipt.frozenAt,
           cutReceipt.isCut ? "ready" : "frozen",
-          cutReceipt.photoDataUrl ?? "no-photo",
+          receiptImageKey(cutReceipt.photoDataUrl),
         ].join(":"),
         squares: cutReceipt.squares,
         photoDataUrl: cutReceipt.photoDataUrl,
